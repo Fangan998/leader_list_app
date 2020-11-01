@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         Cursor c = db.get(id);
         myid = id;
         edit_name.setText(c.getString(1)); //name
-        edit_say.setText(""+c.getInt(2)); //say
+        edit_say.setText(""+c.getString(2)); //say
     }
 
     protected void onDestory(){
