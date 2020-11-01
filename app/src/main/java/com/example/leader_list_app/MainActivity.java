@@ -15,7 +15,7 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-
+/*
     private  DB db = null;
 
     private final static String _ID   = "_id";
@@ -27,12 +27,12 @@ public class MainActivity extends AppCompatActivity {
     ListView LV;
     Cursor cursor;
     long myid; //儲存_id值
-
+*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+/*
         edit_name = findViewById(R.id.edit_name);
         edit_say= findViewById(R.id.edit_say);
         LV =  findViewById(R.id.LV);
@@ -51,8 +51,9 @@ public class MainActivity extends AppCompatActivity {
         db.open();
         cursor = db.getAll();
         UpdateAdapter(cursor);
+        */
     }
-
+/*
     private ListView.OnItemClickListener LVlistener = new ListView.OnItemClickListener() { //此處ListView是物件
         public void onItemClick(AdapterView<?> parent, View v,int position,long id) {
             ShowData(id);
@@ -151,4 +152,7 @@ public class MainActivity extends AppCompatActivity {
             LV.setAdapter(adapter);
         }
     }
+
+ */
 }
+

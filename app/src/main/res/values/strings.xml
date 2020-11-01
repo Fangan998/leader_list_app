@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">leader_list_app</string>
+    <string name="add_new">New</string>
+    <string name="edit_renew">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="reset">Reset Sec</string>
+    <string name="enter">Enter</string>
+    <string name="cancel">Cancel</string>
+    <string name="search">Search</string>
+    <string name="no.">No.</string>
 </resources>
