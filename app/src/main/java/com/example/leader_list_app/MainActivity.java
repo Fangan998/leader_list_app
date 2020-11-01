@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
@@ -15,45 +16,53 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-/*
+
     private  DB db = null;
 
     private final static String _ID   = "_id";
     private final static String NAME  = "name";
     private final static String SAY = "say";
 
-    Button badd , bedit, bdel , bsearch;
-    EditText edit_name , edit_say;
-    ListView LV;
+    Button btn_add , btn_edit, btn_del , btn_re_search,btn_sec;
+    EditText editText_id ;
+    ListView ListV;
     Cursor cursor;
     long myid; //儲存_id值
-*/
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-/*
-        edit_name = findViewById(R.id.edit_name);
-        edit_say= findViewById(R.id.edit_say);
-        LV =  findViewById(R.id.LV);
-        badd = findViewById(R.id.add);
-        bedit= findViewById(R.id.edit);
-        bdel = findViewById(R.id.delete);
-        bsearch= findViewById(R.id.search);
 
-        badd.setOnClickListener(listener);
-        bedit.setOnClickListener(listener);
-        bdel.setOnClickListener(listener);
-        bsearch.setOnClickListener(listener);
-        LV.setOnItemClickListener(LVlistener);
+        //Button
+        btn_add=(Button)findViewById(R.id.btn_add);
+        btn_edit=(Button)findViewById(R.id.btn_edit);
+        btn_del=(Button)findViewById(R.id.btn_del);
+        btn_re_search=(Button)findViewById(R.id.btn_re_sec) ;
+        btn_sec=(Button)findViewById(R.id.btn_sec);
 
+        //EditText
+        editText_id=(EditText)findViewById(R.id.edtxt_id);
+
+        //listView
+        ListV=(ListView)findViewById(R.id.leader_list);
+
+        //btn_listener
+        btn_add.setOnClickListener(listener);
+        btn_edit.setOnClickListener(listener);
+        btn_del.setOnClickListener(listener);
+        btn_re_search.setOnClickListener(listener);
+
+        //ListView_listener
+        ListV.setOnItemClickListener(LVlistener);
+
+        //DataBase
         db = new DB(this);
         db.open();
         cursor = db.getAll();
         UpdateAdapter(cursor);
-        */
     }
-/*
+
     private ListView.OnItemClickListener LVlistener = new ListView.OnItemClickListener() { //此處ListView是物件
         public void onItemClick(AdapterView<?> parent, View v,int position,long id) {
             ShowData(id);
@@ -69,8 +78,7 @@ public class MainActivity extends AppCompatActivity {
     {
         Cursor c = db.get(id);
         myid = id;
-        edit_name.setText(c.getString(1)); //name
-        edit_say.setText(""+c.getString(2)); //say
+        editText_id.setText(c.getString(1)); //name
     }
 
     protected void onDestory(){
@@ -82,28 +90,31 @@ public class MainActivity extends AppCompatActivity {
         public void onClick(View v){
             try {
                 switch (v.getId()){
-                    case R.id.add: {    //新增
-                        String say =  edit_say.getText().toString();
-                        String name = edit_name.getText().toString();
-                        if (db.append(name, say)>0) {
-                            cursor = db.getAll();
-                            UpdateAdapter(cursor);
-                            ClearEdit();
-                        }
-                        break; }
-                    case R.id.edit:{    //修改
-                        String say = edit_say.getText().toString();
-                        String name = edit_name.getText().toString();
-                        if(db.update(myid,name,say)) {
-                            cursor = db.getAll();
-                            UpdateAdapter(cursor);
-                        }
+                    case R.id.btn_add: {    //新增
+                        Intent intent = new Intent();
+                        intent.setClass(MainActivity.this,add_MainActivity.class);
+                        startActivity(intent);
                         break;
-                    }case R.id.delete:{
+                    }
+                    case R.id.btn_edit:{    //修改
+                        String set_ed="Edit";
+                        long id= myid;
+
+                        Intent intent = new Intent();
+                        intent.setClass(MainActivity.this,add_MainActivity.class);
+
+                        Bundle bundle= new Bundle();
+                        bundle.putString("SET",set_ed);
+
+
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                        break;
+                    }case R.id.btn_del:{
                         if(cursor != null && cursor.getCount() >= 0){
                             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                             builder.setTitle("確定刪除");
-                            builder.setMessage("確定要刪除" + edit_name.getText() + "這筆資料?");
+                            builder.setMessage("確定要刪除" + editText_id.getText() + "這筆資料?");
                             builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int i) {
@@ -122,12 +133,13 @@ public class MainActivity extends AppCompatActivity {
                             builder.show();
                         }
                         break;
-                    }case R.id.search:{
-                        String say = edit_say.getText().toString();
-                        String name = edit_name.getText().toString();
+                    }case R.id.btn_sec:{
+                        String say = editText_id.getText().toString();
                         cursor=db.getAll();
                         UpdateAdapter(cursor); // 載入資料表至 ListView 中
                         break;
+                    } case R.id.btn_re_sec:{
+                        ClearEdit();
                     }
                 }
             }catch(Exception er){
@@ -138,8 +150,7 @@ public class MainActivity extends AppCompatActivity {
         }
     };
     public void ClearEdit() { //函式
-        edit_name.setText("");
-        edit_say.setText("");
+        editText_id.setText("");
     }
 
     public void UpdateAdapter(Cursor cursor){
@@ -149,10 +160,9 @@ public class MainActivity extends AppCompatActivity {
                             cursor,
                             new String[]{"name","say"},
                             new int[]{android.R.id.text1,android.R.id.text2},0);
-            LV.setAdapter(adapter);
+            ListV.setAdapter(adapter);
         }
     }
 
- */
 }
 
